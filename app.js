@@ -130,7 +130,8 @@ $(document).ready(function() {
 
     console.log(ships);
 
-  $('#checkForHitButton').on('click', function() {
+  $('#checkForHitButton').on('click', function(event) {
+    event.preventDefault();
     enteredX = $('#xCoordinate').val();
     enteredY = $('#yCoordinate').val();
     $('#message').empty();
