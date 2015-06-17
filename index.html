@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Battleships game</title>
 </head>
 <body>
+    <div id="container">
+        <form class="form-inline">
+          <div class="form-group">
+            <label>X</label>
+            <input type="number" class="form-control" id="xCoordinate">
+          </div>
+          <div class="form-group">
+            <label>Y</label>
+            <input type="number" class="form-control" id="yCoordinate">
+          </div>
+          <button class="btn btn-primary" id="checkForHitButton">Check</button>
+        </form>
+        <div id="innerContainer">
+            <canvas id="canvas" style="border: 1px solid"></canvas>
+            <div id="message">kd</div>
+        </div>
+    </div>
 
-    x:<input type="number" id="xCoordinate">
-    y:<input type="number" id="yCoordinate">
-    <button id="checkForHitButton">Check</button><br>
-    <canvas id="canvas" style="border: 1px solid"></canvas>
-    <div id="message"></div>
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="app.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,19 @@
+#canvas {
+  border-radius: 10px;
+}
+
+#container {
+  margin: 0 auto;
+  width: 50%;
+  margin-top: 20px;
+}
+
+#innerContainer {
+  margin: 0 auto;
+  width: 75%;
+}
+
+#message {
+  margin: 0 auto;
+  width: 45%;
+}
