@@ -5,8 +5,13 @@ var
   width = 300;
 
 
-function drawCanvas(){
+// initial drawing of the canvas
+// top left corner is (0;0)
+// bottom right corner is (10;10)
+// going left - right increases x coordinate
+// going up - down increases y coordinate
 
+function drawCanvas(){
   canvas.height = height;
   canvas.width = width;
   context.fillStyle = "black";
@@ -23,9 +28,13 @@ function drawCanvas(){
   });
 }
 
+// random integer between min and max(excluding max)
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
+// generating random start possition and possible directions for a ship
 
 function getTheDirection(shipSize){
   var
@@ -53,6 +62,7 @@ function getTheDirection(shipSize){
   return result;
 }
 
+// generating points for the whole ship
 
 function getShip(shipSize){
   var
@@ -81,13 +91,12 @@ function getShip(shipSize){
     }); break;
 
   }
-
-  // points.forEach(function(point) {
-  //   point.print();
-  // })
-  // console.log(direction, points);
   return points;
 }
+
+// cheking entered possition for a hit
+// we get the index of the point if we have a hit
+// and -1 otherwise
 
 function checkForHit(points, enteredX, enteredY){
   var result = -1;
@@ -101,6 +110,9 @@ function checkForHit(points, enteredX, enteredY){
   return result;
 }
 
+// cheking for eqivalent poins in the array
+// (this means 2 ships have the same point)
+
 function numberOfEqivalentPoints(points) {
   var result = 0;
   points.forEach(function(point1) {
@@ -113,6 +125,8 @@ function numberOfEqivalentPoints(points) {
   return result;
 }
 
+// generating 3 ships without repeating points
+
 function generateShips(size1, size2, size3) {
   var result = null;
   do {
@@ -120,11 +134,9 @@ function generateShips(size1, size2, size3) {
   }
   while(numberOfEqivalentPoints(result) > size1 + size2 + size3);
 
-  // result.forEach(function(p){
-  //   console.log(p.getX() + 1, p.getY()+ 1)
-  // })
   return result;
 }
+
 
 $(document).ready(function() {
   drawCanvas();
@@ -133,8 +145,8 @@ $(document).ready(function() {
     hits = 0,
     enteredX = null,
     enteredY = null,
-    index = null;
-
+    index = null,
+    message = null;
 
   $('#checkForHitButton').on('click', function(event) {
     event.preventDefault();
@@ -143,22 +155,21 @@ $(document).ready(function() {
     $('#message').empty();
 
     index = checkForHit(ships, enteredX, enteredY);
+
     if(index > -1){
-      $('#message').html('HIT');
+      message = 'Hit'
       ships.splice(index, 1)
     }
     else{
-      $('#message').html('MISSED');
+      message = 'Missed'
     }
+
+    $('#message').html(message);
+
+    $('#statistics').append(['<br/>', 'X:', enteredX + 1, 'Y:', enteredY+1, message].join(' '));
     if(ships.length === 0) {
       alert('YOU WIN!');
     }
   })
-
-
-  //console.log(getTheDirection(5));
-  // drawShip(5);
-  // drawShip(4);
-  // drawShip(4);
 
 })

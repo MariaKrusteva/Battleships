@@ -13,6 +13,12 @@
 }
 
 #message {
+  font-family: "Georgia";
   margin: 0 auto;
-  width: 45%;
+  width: 30%;
+}
+
+#statistics {
+    font-family: "Georgia";
+    font-size: 17px;
 }
