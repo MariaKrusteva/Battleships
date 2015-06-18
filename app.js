@@ -23,26 +23,6 @@ function drawCanvas(){
   });
 }
 
-function Point(x, y, size, ctx){
-  this.x = x;
-  this.y = y;
-  this.size = size;
-  this.ctx = ctx;
-
-  this.getX = function(){
-    return this.x;
-  }
-
-  this.getY = function(){
-    return this.y;
-  }
-
-  this.print = function(){
-    this.ctx.fillRect(this.x * this.size, this.y * this.size, this.size, this.size);
-  }
-
-}
-
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -110,39 +90,67 @@ function getShip(shipSize){
 }
 
 function checkForHit(points, enteredX, enteredY){
-  var result = false;
-  points.forEach(function(point) {
+  var result = -1;
+  points.forEach(function(point, index) {
     if(point.getX() == enteredX && point.getY() == enteredY){
+      result = index;
       point.print();
-      result = true;
     }
   })
+
+  return result;
+}
+
+function numberOfEqivalentPoints(points) {
+  var result = 0;
+  points.forEach(function(point1) {
+    points.forEach(function(point2) {
+      if(point1.equivalent(point2)) {
+        result++;
+      }
+    })
+  })
+  return result;
+}
+
+function generateShips(size1, size2, size3) {
+  var result = null;
+  do {
+    result = _.union(getShip(size1), getShip(size2), getShip(size3));
+  }
+  while(numberOfEqivalentPoints(result) > size1 + size2 + size3);
+
+  // result.forEach(function(p){
+  //   console.log(p.getX() + 1, p.getY()+ 1)
+  // })
   return result;
 }
 
 $(document).ready(function() {
   drawCanvas();
   var
-    ships = _.union(getShip(5), getShip(4), getShip(4)),
+    ships = generateShips(5,4,4),
     hits = 0,
     enteredX = null,
-    enteredY = null;
+    enteredY = null,
+    index = null;
 
-    console.log(ships);
 
   $('#checkForHitButton').on('click', function(event) {
     event.preventDefault();
-    enteredX = $('#xCoordinate').val();
-    enteredY = $('#yCoordinate').val();
+    enteredX = $('#xCoordinate').val() - 1;
+    enteredY = $('#yCoordinate').val() - 1;
     $('#message').empty();
-    if(checkForHit(ships, enteredX, enteredY)){
+
+    index = checkForHit(ships, enteredX, enteredY);
+    if(index > -1){
       $('#message').html('HIT');
-      hits += 1;
+      ships.splice(index, 1)
     }
     else{
       $('#message').html('MISSED');
     }
-    if(hits === ships.length) {
+    if(ships.length === 0) {
       alert('YOU WIN!');
     }
   })

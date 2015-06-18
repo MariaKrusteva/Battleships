@@ -4,13 +4,12 @@
 
 #container {
   margin: 0 auto;
-  width: 50%;
+  width: 30%;
   margin-top: 20px;
 }
 
-#innerContainer {
-  margin: 0 auto;
-  width: 75%;
+.form-group {
+    margin-left: 23px;
 }
 
 #message {
